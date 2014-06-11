@@ -29,7 +29,6 @@
                 this.onInit.apply(this, arguments);
             }
         },
-
         start: function() {
             this.timer.now = Date.now();
             this.timer.last = Date.now();

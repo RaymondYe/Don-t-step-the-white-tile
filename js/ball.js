@@ -22,7 +22,24 @@ function(exports) {
     width: 640
   };
 
+  var score = 0; //积分
+  var best = 0; //历史最高分
+  if (window.localStorage) {
+    best = localStorage.getItem('best') || 0;
+  }
 
+  var status; // 'loading', 'ready', 'playing', 'gameover'
+  var bestNew = false; // 新记录
+  function gameOver() {
+    if (score > best) {
+      best = score;
+      bestNew = true;
+      if (window.localStorage) {
+        localStorage.setItem('best', best);
+        $('best').innerHTML = best;
+      }
+    }
+  }
 
   // random number
   function random(x) {
@@ -72,6 +89,7 @@ function(exports) {
   function tap() {
     if (this.attributes['data-id']) {
       toggleBall(this);
+      score += 1;
     }
   }
 
@@ -85,18 +103,19 @@ function(exports) {
 
     var t = BallInfo.timer * 1000 - (this.timer.last - this.timer.start);
 
-    if (t > 0) {
+    if (t > 0 && this.running) {
       var m = Math.floor(t / 1000);
       var h = (t / 10).toFixed(0).toString().substr(-2, 2);
       BallInfo.Time.innerHTML = m + "'" + h + "''";
+      $('score').innerHTML = score;
     } else {
-      clearInterval(BallInfo.sTime);
-      BallInfo.Time.innerHTML = "0'" + "00''";
       this.stop();
     }
 
   }
-
+  function $(o){
+    return document.getElementById(o);
+  }
   function toggleBall(b) {
 
     var img = b.getElementsByTagName('img')[0];
@@ -116,8 +135,10 @@ function(exports) {
       Grid.width = this.id.offsetWidth;
       render(g);
 
-      document.getElementById('start').addEventListener('click', function() {
-        self.onStart();
+      $('score').innerHTML = score;
+      $('best').innerHTML = best;
+      $('start').addEventListener('click', function() {
+        self.start();
       }, false);
 
     },
@@ -135,6 +156,15 @@ function(exports) {
       };
 
     },
+    removeEvent: function() {
+
+      var l = this.id.getElementsByTagName('li');
+
+      for (var i = 0; i < l.length; i++) {
+        l[i].removeEventListener('click', tap);
+      };
+
+    },
     onRun: function() {
       var self = this;
       BallInfo.sTime = setInterval(function() {
@@ -142,7 +172,10 @@ function(exports) {
       }, this.timer.step);
     },
     onStop: function() {
-      removeEventListener();
+      clearInterval(BallInfo.sTime);
+      BallInfo.Time.innerHTML = "0'" + "00''";
+      this.removeEvent();
+      gameOver();
       alert('Over game');
     }
 
