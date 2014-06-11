@@ -1,0 +1,28 @@
+body{ background: #FCFAF2;}
+ul, ol{ padding-left: 0; list-style: none;}
+
+
+/* index */
+.index { padding: 15px; width: 100%; }
+.index .nav-tabs li { width: 50%; }
+.index .tab-content { min-height: 120px; height: 120px; overflow: auto; -webkit-overflow-scrolling: touch;}
+.card-user { border-radius: 50%; display: block; margin: 0 auto 15px; width: 110px; height: 110px; }
+/* ball */
+.ball { padding: 15px; width: 100%; }
+
+/* Game */
+.game { width: 100%;}
+.game ul { width: 100%;}
+.game ul li{ width: 25%; border: 1px #fff solid; height: 100px; display: block; background: #333; float: left;}
+
+/*ranking*/
+.ranking{ padding: 15px; width: 100%; }
+/*Common*/
+.rank{ width: 100%;}
+.rank>li{ width: 100%; line-height: 50px; background: #333; color: #fff;}
+.rank>li>span{ width: 50px; display: inline-block;}
+.rank>li>img{ width: 50px; height: 50%; border-radius: 50%;}
+.rank>li>b{ width: 50px; display: inline-block;}
+.rank>li>p{ width: 100px; display: inline-block; float: right; margin-bottom: 0;}
+
+.disabled { pointer-events: none; }

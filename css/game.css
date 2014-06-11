@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  background: #FCFAF2;
+  -webkit-user-select: none;
+  -webkit-overflow-scrolling: touch;
+}
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+  -webkit-text-size-adjust: none;
+}
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.game {
+  width: 100%;
+  display: block;
+  max-width: 640px;
+  margin: auto;
+  background: url(../img/game-bg.jpg) center center;
+  overflow: hidden;
+}
+.game>li {
+  width: 25%;
+  display: block;
+  float: left;
+  box-sizing: border-box;
+  border: 1px #fff solid;
+}
+.game>li>img {
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transition: 5s;
+  -webkit-transition: 5s;
+}
+.game .ball {
+}
+@media screen and (max-device-width:320px) {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+.animated {
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both
+}
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0)
+  }
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translateX(-10px);
+    transform: translateX(-10px)
+  }
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px)
+  }
+}
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0)
+  }
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translateX(-10px);
+    -ms-transform: translateX(-10px);
+    transform: translateX(-10px)
+  }
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translateX(10px);
+    -ms-transform: translateX(10px);
+    transform: translateX(10px)
+  }
+}
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake
+}

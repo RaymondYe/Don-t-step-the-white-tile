@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta content="telephone=no" name="format-detection" />
+  <meta name="screen-orientation" content="landscape"/>
+  <meta name="Keywords" content="ball">
+  <meta name="Description" content="ball">
+  <meta name="author" content="RaymondYip">
+  <title>ball</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css"></head>
+<body>
+  <div class="ball">
+    <div class="well">
+      <span class="btn btn-default">30'00</span>
+      <span class="btn btn-default">*99</span>
+    </div>
+    <p class="text-center">世界杯场景图</p>
+    <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#myModal">Game Start!!!</button>
+  </div>
+  <div class="game">
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+        <div class="modal-body">
+          <div class="well">
+            <p class="text-center">进球数:99</p>
+            <p class="text-center">排名:1</p>
+          </div>
+          <p class="text-center">炫成绩,再奖励10个进球数</p>
+          <button class="btn btn-danger btn-block btn-lg" id="share">关注梵思诺,获奖品</button>
+          <br>
+          <div class="well">
+            <a href="ranking.html" class="btn btn-warning">查看排行榜</a>
+            <button class="btn btn-info">在玩一次</button>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+      <!-- /.modal-content --> </div>
+    <!-- /.modal-dialog --> </div>
+  <!-- /.modal -->
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+  $(function() {
+    $('#share').click(function(event) {
+      $('#myModal').modal('hide');
+      /* Act on the event */
+      var imgUrl='./img/img-guide.png';
+      $('body').append('<img src="'+ imgUrl+'" alt="" id="J_share-tips" '+
+                  'style="position: fixed;left:50%;margin-left:-140px;;top:0px;width:280px;height: auto;z-index:1000;'+
+                  ' background-repeat: no-repeat;background-position:center 0px;z-index:99999999"/>');
+      $('body').append('<div id="J-Simple-Mask" style="display: block; z-index: 999; left: 0px; position: fixed; top: 0px; width: '+screen.availWidth+'px; opacity: 0.6; height: '+screen.availHeight+'px; background-color: black;"></div>');
+
+      $('#J_share-tips').on('click',function(){
+        $('#J_share-tips').remove();
+        $('#J-Simple-Mask').remove();
+      });
+    });
+  });
+
+  </script>
+</body>
+</html>
