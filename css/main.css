@@ -1,28 +1,38 @@
-body{ background: #FCFAF2;}
-ul, ol{ padding-left: 0; list-style: none;}
-
-
+body { font-size: 16px; }
+ul, ol { padding-left: 0; list-style: none; }
+img { max-width: 640px; width: 100%; }
 /* index */
-.index { padding: 15px; width: 100%; }
-.index .nav-tabs li { width: 50%; }
-.index .tab-content { min-height: 120px; height: 120px; overflow: auto; -webkit-overflow-scrolling: touch;}
+.index { width: 100%; max-width: 640px; margin: auto; }
+.index .send{ width: 60%; display: block; margin: auto;}
+.index .nav-top{ width: 100%; position: relative; bottom: -50px;}
+.index .nav-top>img{ display: block;}
+.index .nav-top a { width: 50%; position: absolute; height: 80px; display: block;}
+.index .nav-top a.first { top: 0; left: 0; }
+.index .nav-top a.last { top: 0; right: 0; }
+.index .tab-content { min-height: 120px; overflow: auto; -webkit-overflow-scrolling: touch; background: url(../img/text-mid.jpg);  background: #f4f6e0; margin: 0 15px; padding-top: 40px; border-radius: 5px; box-shadow: 0 3px 5px 1px rgba(0,0,0,.5); }
+.i-tab{ margin-top: -45px;}
 .card-user { border-radius: 50%; display: block; margin: 0 auto 15px; width: 110px; height: 110px; }
+
+.footer { padding: 10px 0; width: 100%; max-width: 640px; margin: auto; color: #000;}
+.footer p{ margin-bottom: 0;}
 /* ball */
 .ball { padding: 15px; width: 100%; }
-
 /* Game */
-.game { width: 100%;}
-.game ul { width: 100%;}
-.game ul li{ width: 25%; border: 1px #fff solid; height: 100px; display: block; background: #333; float: left;}
-
-/*ranking*/
-.ranking{ padding: 15px; width: 100%; }
-/*Common*/
-.rank{ width: 100%;}
-.rank>li{ width: 100%; line-height: 50px; background: #333; color: #fff;}
-.rank>li>span{ width: 50px; display: inline-block;}
-.rank>li>img{ width: 50px; height: 50%; border-radius: 50%;}
-.rank>li>b{ width: 50px; display: inline-block;}
-.rank>li>p{ width: 100px; display: inline-block; float: right; margin-bottom: 0;}
-
+.game { width: 100%; }
+.game ul { width: 100%; }
+.game ul li { width: 25%; border: 1px #fff solid; height: 100px; display: block; background: #333; float: left; }
+/* ranking */
+.ranking { padding: 15px; width: 100%; }
+/* Common */
+.rank { width: 100%;  background: #f4f6e0; }
+.rank>li { width: 100%; line-height: 60px; height: 70px; color: #85847d; position: relative; overflow: hidden; background: url(../img/line.png) repeat-x  center 56px; padding-bottom: 10px;}
+.rank>li>span { width: 50px; display: inline-block; position: relative; text-align: center; bottom: 0; left: 0; height: 60px; background: url(../img/ryuan.png) no-repeat center center; background-size: 30px 30px; color: #5c6051; padding-left: 5px;}
+.rank>li>span.yuan1{ background-size: 50px 50px; padding-left: 12px;}
+.rank>li>span.yuan2{ background-size: 40px 40px; padding-left: 10px;}
+.rank>li>span>.ryuan{ position: absolute; top: 0; left: 0; width: 30px;}
+.rank>li>span>i{ position: absolute; top: 0; left: 0; right: 0; margin: auto; bottom: 0;}
+.rank>li>img { width: 50px; height: 50px; border-radius: 50%; }
+.rank>li>b { width: 50px; display: inline-block; color: #262626; padding-left: 15px;}
+.rank>li>p { width: 100px; display: inline-block; float: right; margin-bottom: 0; }
 .disabled { pointer-events: none; }
+.bg-green { background: url(../img/green.jpg); }

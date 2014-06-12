@@ -12,6 +12,7 @@ ul, ol {
   padding: 0;
   list-style: none;
 }
+.wall{ width: 100%; max-width: 640px; margin: auto; overflow: hidden;}
 .game {
   width: 100%;
   display: block;
@@ -33,6 +34,7 @@ ul, ol {
   -webkit-transform: translate3d(0, 0, 0);
   transition: 5s;
   -webkit-transition: 5s;
+  cursor: pointer;
 }
 .game .ball {
 }

@@ -11,7 +11,7 @@ function(exports) {
 
   var BallInfo = {
     timer: 5,
-    Time: document.getElementById('time'),
+    Time: $('time'),
     sTime: '',
   };
 
@@ -19,9 +19,11 @@ function(exports) {
   var Grid = {
     total: 16,
     cols: 4,
-    width: 640
+    width: 640,
+    height: 0,
   };
 
+  var queue = 0;
   var score = 0; //积分
   var best = 0; //历史最高分
   if (window.localStorage) {
@@ -61,7 +63,7 @@ function(exports) {
       b = random(Grid.cols);
     for (var i = 0; i < Grid.cols; i++) {
       if (b == i) {
-        h += '<li data-id="me"><img src="img/ball-1.png" alt="Ball"/></li>';
+        h += '<li data-ball="me"><img src="img/ball-1.png" alt="Ball"/></li>';
       } else {
         h += '<li></li>';
       }
@@ -75,8 +77,12 @@ function(exports) {
     g.innerHTML = renderGrid();
 
     var l = g.getElementsByTagName('li');
+
+    Grid.height = Grid.width / 4;
+    $('wall').style.height = Grid.width + 'px';
+
     for (var i = 0; i < l.length; i++) {
-      l[i].style['height'] = Grid.width / 4 + 'px';
+      l[i].style['height'] = Grid.height + 'px';
     };
 
     initTime();
@@ -86,11 +92,8 @@ function(exports) {
 
   }
 
-  function tap() {
-    if (this.attributes['data-id']) {
-      toggleBall(this);
-      score += 1;
-    }
+  function toggleGrid(g) {
+    $('game').style.webkitTransform = 'translate3d(0,' + g + 'px,0)';
   }
 
   function initTime() {
@@ -113,9 +116,11 @@ function(exports) {
     }
 
   }
-  function $(o){
+
+  function $(o) {
     return document.getElementById(o);
   }
+
   function toggleBall(b) {
 
     var img = b.getElementsByTagName('img')[0];
@@ -148,11 +153,16 @@ function(exports) {
       this.onRun();
     },
     initEvent: function() {
-
+      var self = this;
       var l = this.id.getElementsByTagName('li');
 
       for (var i = 0; i < l.length; i++) {
-        l[i].addEventListener('click', tap, false);
+        l[i].addEventListener('click', function tap() {
+          if (this.attributes['data-ball'] && self.running && !self.paused) {
+            toggleBall(this);
+            score += 1;
+          }
+        }, false);
       };
 
     },
@@ -176,7 +186,9 @@ function(exports) {
       BallInfo.Time.innerHTML = "0'" + "00''";
       this.removeEvent();
       gameOver();
-      alert('Over game');
+      if (DEBUG) {
+        console.log('Over game');
+      }
     }
 
   });
