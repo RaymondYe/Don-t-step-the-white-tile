@@ -10,13 +10,13 @@
   <meta name="Description" content="ball">
   <meta name="author" content="RaymondYip">
   <title>index</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css"></head>
 <body class=" bg-green">
   <div class="index">
     <div class="text-center">
       <img src="img/hd.jpg" alt="hd"></div>
-    <img src="img/btn.png" alt="开始射球" class="send">
+    <a href="ball.html"><img src="img/btn.png" alt="开始射球" class="send"></a>
 
     <div class="i-tab">
       <!-- /.Tab nav-->
@@ -28,11 +28,30 @@
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane " id="home">
+        <div class="tab-pane active" id="home">
           <img src="img/text.jpg" alt="text"></div>
-        <div class="tab-pane active" id="profile">
-
-          <ul class="rank">
+        <div class="tab-pane" id="profile">
+          <div class="rank-user clearfix">
+            <h3>个人记录</h3>
+            <div class="rank-record">
+              <img src="img/user-img.png" alt="用户头像">
+              <p class="pull-left nick"> <b>流年岁月</b>
+                <br>
+                已玩<span>10</span>次
+              </p>
+              <p class="pull-right nick2">
+                得分:88
+                <br>排名: <span class="text-success">8</span> </p>
+            </div>
+          </div>
+          <p class="rank-well">
+            您已经
+            <span>击败80%</span>
+            玩家，再努力一点就能拿到奖品了。
+          </p>
+          <h2 class="rank-title">
+            <img src="img/jiang.png" alt="奖杯">排行榜</h2>
+          <ul class="rank" id="rank">
             <li>
               <span class="yuan1">1</span>
               <img src="img/u0.jpg" alt="userImage"> <b>昵称</b>
@@ -40,7 +59,8 @@
             </li>
             <li>
               <span class="yuan2">2</span>
-              <img src="img/u0.jpg" alt="userImage"> <b>昵称</b>
+              <img src="img/u0.jpg" alt="userImage">
+              <b>昵称</b>
               <p>得分: 99</p>
             </li>
             <li>
@@ -101,7 +121,31 @@
   <div class="footer">
     <p class="text-center">技术支持：星云微讯科技0755-28520488</p>
   </div>
-  <script src="js/jquery.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="http://code.baidu.com/touch-0.2.13.min.js"></script>
+  <script>
+  $(function() {
+    touch.on('#rank','swipeup',function(){
+      //Ajax get more rank
+      $.ajax({
+        url: './server/controller.php',
+        type: 'post',
+        dataType: 'json',
+        data: {param1: 'value1'},
+      })
+      .done(function() {
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    });
+  });
+  </script>
 </body>
 </html>

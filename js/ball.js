@@ -7,11 +7,11 @@ function(exports) {
    * @author RaymondyYip
    * @version 2014/6/9
    */
-  var DEBUG = false;
+  var DEBUG = true;
 
   var BallInfo = {
     timer: 5,
-    Time: $('time'),
+    Time: getId('time'),
     sTime: '',
   };
 
@@ -25,20 +25,20 @@ function(exports) {
 
   var queue = 0;
   var score = 0; //积分
-  var best = 0; //历史最高分
+  var fsnBest = 0; //历史最高分
   if (window.localStorage) {
-    best = localStorage.getItem('best') || 0;
+    fsnBest = localStorage.getItem('fsnBest') || 0;
   }
 
   var status; // 'loading', 'ready', 'playing', 'gameover'
   var bestNew = false; // 新记录
   function gameOver() {
-    if (score > best) {
-      best = score;
+    if (score > fsnBest) {
+      fsnBest = score;
       bestNew = true;
       if (window.localStorage) {
-        localStorage.setItem('best', best);
-        $('best').innerHTML = best;
+        localStorage.setItem('fsnBest', fsnBest);
+        getId('best').innerHTML = fsnBest;
       }
     }
   }
@@ -79,7 +79,7 @@ function(exports) {
     var l = g.getElementsByTagName('li');
 
     Grid.height = Grid.width / 4;
-    $('wall').style.height = Grid.width + 'px';
+    getId('wall').style.height = Grid.width + 'px';
 
     for (var i = 0; i < l.length; i++) {
       l[i].style['height'] = Grid.height + 'px';
@@ -93,7 +93,7 @@ function(exports) {
   }
 
   function toggleGrid(g) {
-    $('game').style.webkitTransform = 'translate3d(0,' + g + 'px,0)';
+    getId('game').style.webkitTransform = 'translate3d(0,' + g + 'px,0)';
   }
 
   function initTime() {
@@ -110,14 +110,40 @@ function(exports) {
       var m = Math.floor(t / 1000);
       var h = (t / 10).toFixed(0).toString().substr(-2, 2);
       BallInfo.Time.innerHTML = m + "'" + h + "''";
-      $('score').innerHTML = score;
+      getId('score').innerHTML = score;
     } else {
       this.stop();
     }
 
   }
 
-  function $(o) {
+  function saveInfo(){
+    getId.ajax({
+      url: './server/controller.php',
+      type: 'post',
+      dataType: 'json',
+      data: {param1: 'value1'},
+    })
+    .done(function() {
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  }
+
+  function tap() {
+    if (this.attributes['data-ball'] && ball.running && !ball.paused) {
+      toggleBall(this);
+      score += 1;
+    }
+  }
+
+  function getId(o) {
     return document.getElementById(o);
   }
 
@@ -140,14 +166,17 @@ function(exports) {
       Grid.width = this.id.offsetWidth;
       render(g);
 
-      $('score').innerHTML = score;
-      $('best').innerHTML = best;
-      $('start').addEventListener('click', function() {
+      getId('score').innerHTML = '&#215;' + score;
+      //getId('best').innerHTML = best;
+      getId('start').addEventListener('click', function() {
+        getId('review').className = 'flipOutX animated';
+        getId('review').style.display = 'none';
         self.start();
       }, false);
 
     },
     onStart: function() {
+      getId('start').style.display = 'none';
       this.initEvent();
       this.timer.start = Date.now();
       this.onRun();
@@ -157,12 +186,7 @@ function(exports) {
       var l = this.id.getElementsByTagName('li');
 
       for (var i = 0; i < l.length; i++) {
-        l[i].addEventListener('click', function tap() {
-          if (this.attributes['data-ball'] && self.running && !self.paused) {
-            toggleBall(this);
-            score += 1;
-          }
-        }, false);
+        l[i].addEventListener('click', tap, false);
       };
 
     },
@@ -185,7 +209,8 @@ function(exports) {
       clearInterval(BallInfo.sTime);
       BallInfo.Time.innerHTML = "0'" + "00''";
       this.removeEvent();
-      gameOver();
+      $('#myModal').modal('show');
+      saveInfo();
       if (DEBUG) {
         console.log('Over game');
       }
