@@ -1,4 +1,4 @@
-ball
+Tap the ball.
 ====
+Imitate Don't Tap The White Tile.
 
-Don't kill the ball.
