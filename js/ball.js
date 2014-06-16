@@ -10,7 +10,7 @@ function(exports) {
   var DEBUG = false;
 
   var BallInfo = {
-    timer: 5,
+    timer: 12220,
     Time: getId('time'),
     sTime: '',
   };
@@ -63,38 +63,40 @@ function(exports) {
 
   // render Grid cols
   function renderGridcols() {
-    var h = '',
+
+    var h = '<li><ul>',
       p = random(10),
       b = random(Grid.cols);
+
+    Grid.height = Grid.width / 4
+
     for (var i = 0; i < Grid.cols; i++) {
       if (b == i) {
         if (p == 0) {
-          h += '<li data-ball="me"><img src="img/ball-2.png" alt="Ball"/></li>'
+          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-2.png" alt="Ball"  data-ball="me"/></li>'
         } else {
-          h += '<li data-ball="me"><img src="img/ball-1.png" alt="Ball"/></li>'
+          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-1.png" alt="Ball"  data-ball="me"/></li>'
         }
       } else {
-        h += '<li></li>'
+        h += '<li style="height:' + Grid.height + 'px"></li>'
       }
     }
+
+    h += '</ul></li>'
     return h;
   }
 
   // render view
   function render(g) {
 
-    g.innerHTML = renderGrid();
+    var l = g.getElementsByTagName('li')
 
-    var l = g.getElementsByTagName('li');
+    g.innerHTML = renderGrid()
 
-    Grid.height = Grid.width / 4;
-    getId('wall').style.height = Grid.width + 'px';
-
-    for (var i = 0; i < l.length; i++) {
-      l[i].style['height'] = Grid.height + 'px';
-    }
+    getId('wall').style.height = Grid.width + 'px'
 
     initTime()
+
   }
 
   //Init time
@@ -114,29 +116,6 @@ function(exports) {
     } else {
       this.stop();
     }
-  }
-
-  //Tap the ball
-  function tap() {
-    if (this.attributes['data-ball'] && ball.running && !ball.paused) {
-      toggleGrid();
-      toggleBall(this);
-      score += 1;
-    }
-  }
-
-  // Toggle Grid
-  function toggleGrid() {
-    var g = Grid.height;
-    getId('game').style.webkitTransform = 'translate3d(0,' + g + 'px,0)';
-    console.log(renderGridcols());
-  }
-
-  //ToggleBall
-  function toggleBall(b) {
-    var img = b.getElementsByTagName('img')[0];
-    img.className = 'animated shake';
-    img.src = 'img/ball-3.png';
   }
 
   //Save the user ball info
@@ -195,42 +174,72 @@ function(exports) {
 
       //add Event for the Grid
       var self = this;
-      var l = this.id.getElementsByTagName('li');
 
-      for (var i = 0; i < l.length; i++) {
-        l[i].addEventListener('click', tap, false);
-      };
+      this.id.addEventListener('click', function(e) {
 
-    },
-    removeEvent: function() {
+        var img = e.target
 
-      // remove Event for the Grid
-      var l = this.id.getElementsByTagName('li');
+        if (img.attributes['data-ball'] && ball.running && !ball.paused) {
 
-      for (var i = 0; i < l.length; i++) {
-        l[i].removeEventListener('click', tap);
-      };
+          // get new col
+          var col = renderGridcols()
+
+          //move canvas
+          getId('game').style.webkitTransition = '0ms';
+          getId('game').style.webkitTransform = 'translate3d(0,' + Grid.height + 'px,0)'
+
+          //post canvas
+          //$('#game').prepend(col)
+
+          // change the ball
+          var type = img.src.substr(-5, 1)
+
+          // same ball
+          if (type == 1) {
+            img.className = 'animated shake'
+            img.src = 'img/ball-3.png'
+          }
+
+          // fsn ball
+          if (type == 2) {
+            img.className = 'animated shake'
+            img.src = 'img/ball-4.png'
+
+            self.onPause();
+          }
+
+          // add Score
+          score += 1;
+        }
+
+      }, false);
 
     },
     onRun: function() {
 
       // Running the timer add update time
-      var self = this;
-      BallInfo.sTime = setInterval(function() {
-        updateTime.call(self);
-      }, this.timer.step);
+      var self = this
 
+      BallInfo.sTime = setInterval(function() {
+        updateTime.call(self)
+      }, self.timer.step)
+
+    },
+    onPause: function() {
+      var self = this
+      var to = setTimeout(function() {
+        self.onRun()
+      }, 1000)
+      clearInterval(BallInfo.sTime)
     },
     onStop: function() {
 
       // clear the time Interval
       clearInterval(BallInfo.sTime)
+      this.id.className += ' disabled'
 
       // post the time html
       BallInfo.Time.innerHTML = "0'" + "00''"
-
-      // remove the ball event
-      this.removeEvent()
 
       // show the modal
       $('#myModal').modal('show')
