@@ -26,7 +26,7 @@ img { max-width: 640px; width: 100%; }
 .game-start:focus { border: none; }
 /* Game */
 .wall { width: 100%; max-width: 640px; margin: auto; overflow: hidden; }
-.game { width: 100%; display: block; max-width: 640px; margin: auto; background: url(../img/game-bg.jpg) center center; overflow: hidden; }
+.game { width: 100%; display: block; max-width: 640px; margin: auto; background: url(../img/game-bg.jpg) center center; overflow: hidden; transition: .5s; -webkit-transition: .5s; }
 .game-info { position: absolute; top: 1em; z-index: 1001; color: #fff; overflow: hidden; font-size: 24px; width: 100%; padding: 0 15px; }
 .game-info>i { height: 30px; display: block; padding-left: 30px; background: url(../img/time.png) no-repeat; }
 .game-info>#time { background-position: 0 0; background-size: 55px; }
@@ -63,4 +63,4 @@ img { max-width: 640px; width: 100%; }
 .disabled { pointer-events: none; }
 .bg-green { background: url(../img/green.jpg) center center; }
 .bg-game { background: url(../img/game-bg.jpg) center center; }
-.nobor{ border: none;}
+.nobor { border: none; }
