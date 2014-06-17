@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="css/main.css">
   <script src="js/game.js"></script>
 </head>
-<body class="bg-game">
+<body class="bg-lv">
 
   <div class="ball">
     <img src="img/game-hd.jpg" alt="game-hd" class="game-hd">
@@ -27,50 +27,75 @@
       <ul id="game" class="game"></ul>
       <!-- /.game--> </div>
     <!-- /#wall-->
-    <img src="img/review.jpg" alt="review" id="review" class="review"></div>
+    <img src="img/review.jpg" alt="review" id="review" class="review">
+    <img src="img/ball-big.png" alt="big-ball" class="review hidden" id="big"></div>
   <!-- /.ball-->
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade over" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content game-over">
-        <div class="modal-header nobor"></div>
+        <div class="modal-header hidden"></div>
         <div class="modal-body">
 
-          <p class="text-center">得分:99</p>
-          <p class="text-center">排名:1</p>
+          <p class="text-center over-score">
+            得分:
+            <span id="modalScore">99</span>
+          </p>
+          <p class="text-center bor-line over-rank">
+            排名:
+            <span id="rank">1</span>
+          </p>
 
-          <p class="text-center">您已经击败80%玩家，再努力一点就能拿到奖品了。</p>
-          <p class="text-center">
-            炫成绩，奖励10积分助你拿奖
+          <p class="text-center bor-line">您已经击败80%玩家，再努力一点就能拿到奖品了。</p>
+          <p class="text-center share bor-line" id="share">
+            <a href="share.html">炫成绩，奖励10积分助你拿奖</a>
           </p>
           <br>
 
-          <a href="ranking.html" class="btn btn-warning col-xs-5 col-xs-offset-1">查看排行榜</a>
-          <button class="btn btn-info col-xs-5 col-xs-offset-1">在玩一次</button>
+          <a href="ranking.html" class="col-xs-5 col-xs-offset-1 btn-b">查看排行榜</a>
+          <a class="col-xs-5 col-xs-offset-1 btn-b" id="resume">在玩一次</a>
 
         </div>
-        <div class="modal-footer nobor"></div>
+        <div class="modal-footer hidden"></div>
       </div>
       <!-- /.modal-content --> </div>
     <!-- /.modal-dialog --> </div>
   <!-- /.modal -->
   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-  <script src="js/ball.js"></script>
+  <script src="js/ball.min.js"></script>
   <script>
-$(function() { $('#share').click(function(event) { $('#myModal').modal('hide'); /* Act on the event */
-    var imgUrl = './img/img-guide.png'; $('body').append('<img src="' + imgUrl + '" alt="" id="J_share-tips" ' +
-    'style="position: fixed; left: 50%; margin-left: -140px; top: 0px; width: 280px; height: auto; z-index: 1000; ' +
-    ' background-repeat: no-repeat; background-position: center 0px; z-index: 99999999"/>'); $('body').append('<div id="J-Simple-Mask" style="display: block; z-index: 999; left: 0px; position: fixed; top: 0px; width: ' + screen.availWidth + 'px; opacity: 0.6; height: ' + screen.availHeight + 'px; background-color: black; "></div>');
-    $('#J_share-tips').on('click', function() { $('#J_share-tips').remove(); $('#J-Simple-Mask').remove(); }
-  ); }
-); }
-);
-void
-function() { window.onload = function() { // Game init
-  ball.init(document.getElementById('game')); }
-}
-(); </script>
+
+    $(function() {
+
+      //$('#myModal').modal('show')
+
+      //FastClick.attach(document.body)
+      /*
+      $('#share').click(function(event) {
+        $('#myModal').modal('hide');
+        var imgUrl = './img/img-guide.png';
+        $('body').append('<img src="' + imgUrl + '" alt="" id="J_share-tips" ' +
+          'style="position: fixed; left: 50%; margin-left: -140px; top: 0px; width: 280px; height: auto; z-index: 1000; ' +
+          ' background-repeat: no-repeat; background-position: center 0px; z-index: 99999999"/>');
+        $('body').append('<div id="J-Simple-Mask" style="display: block; z-index: 999; left: 0px; position: fixed; top: 0px; width: ' + screen.availWidth + 'px; opacity: 0.6; height: ' + screen.availHeight + 'px; background-color: black; "></div>');
+        $('#J_share-tips').on('click', function() {
+          $('#J_share-tips').remove();
+          $('#J-Simple-Mask').remove();
+        });
+      })
+      */
+
+    })
+
+    void
+    function() {
+      window.onload = function() { // Game init
+        ball.init(document.getElementById('game'))
+      }
+    }
+    ();
+  </script>
 </body>
 </html>

@@ -1,8 +1,9 @@
 "use strict";
 /*
- * 别碰白格子
- * @author RaymondyYip
- * @version 2014/6/9
+ * Tap the ball.
+ * @ author RaymondyYip
+ * @ version 2014/6/9
+ * @ email 478562258@qq.com
  */
 void
 
@@ -10,9 +11,11 @@ function(exports) {
   var DEBUG = false;
 
   var BallInfo = {
-    timer: 12220,
+    timer: 30,
     Time: getId('time'),
     sTime: '',
+    moveSpeed: 300,
+    fsnStop: 2000,
   };
 
 
@@ -65,7 +68,7 @@ function(exports) {
   function renderGridcols() {
 
     var h = '<li><ul>',
-      p = random(10),
+      p = random(20),
       b = random(Grid.cols);
 
     Grid.height = Grid.width / 4
@@ -73,9 +76,9 @@ function(exports) {
     for (var i = 0; i < Grid.cols; i++) {
       if (b == i) {
         if (p == 0) {
-          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-2.png" alt="Ball"  data-ball="me"/></li>'
+          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-2.png" alt="Ball"  data-ball="0"/></li>'
         } else {
-          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-1.png" alt="Ball"  data-ball="me"/></li>'
+          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-1.png" alt="Ball"  data-ball="0"/></li>'
         }
       } else {
         h += '<li style="height:' + Grid.height + 'px"></li>'
@@ -107,15 +110,41 @@ function(exports) {
   function updateTime() {
     this.timer.last = Date.now();
     var t = BallInfo.timer * 1000 - (this.timer.last - this.timer.start);
-
-    if (t > 0 && this.running) {
-      var m = Math.floor(t / 1000);
-      var h = (t / 10).toFixed(0).toString().substr(-2, 2);
-      BallInfo.Time.innerHTML = m + "'" + h + "''";
-      getId('score').innerHTML = score;
-    } else {
-      this.stop();
+    if (this.running) {
+      if (t > 0) {
+        var m = Math.floor(t / 1000);
+        var h = (t / 10).toFixed(0).toString().substr(-2, 2);
+        BallInfo.Time.innerHTML = m + "'" + h + "''"
+        updateScore()
+      } else {
+        clearInterval(BallInfo.sTime)
+        this.stop()
+      }
     }
+  }
+  //Update score
+  function updateScore() {
+    getId('score').innerHTML = '&#215;' + score
+  }
+
+  //Next Ball Cols
+  var moveNext = function() {
+    $('#game').css({
+      'webkitTransition': BallInfo.moveSpeed + 'ms',
+      'webkitTransform': 'translate3d(0,-' + 0 + 'px,0)'
+    });
+  }
+
+  function Next(html, f) {
+    $('#game').css({
+      'webkitTransition': '0ms',
+      'webkitTransform': 'translate3d(0,-' + Grid.height + 'px,0)'
+    }).prepend(html);
+
+    setTimeout(function() {
+      f()
+    }, 0);
+
   }
 
   //Save the user ball info
@@ -143,19 +172,20 @@ function(exports) {
     onInit: function(g) {
 
       //Rendering the game grid
-      var self = this;
-      this.id = g;
-      Grid.width = this.id.offsetWidth;
-      render(g);
+      var self = this
+      this.id = g
+
+      Grid.width = this.id.offsetWidth
+      render(g)
 
       //Init Score
-      getId('score').innerHTML = '&#215;' + score;
+      updateScore()
 
       //add Event for Game Start
-      getId('start').addEventListener('click', function() {
-        getId('review').className = 'flipOutX animated';
-        getId('review').style.display = 'none';
-        self.start();
+      getId('start').addEventListener('touchstart', function() {
+        getId('review').className = 'flipOutX animated'
+        getId('review').style.display = 'none'
+        self.start()
       }, false);
 
       if (DEBUG) debugger
@@ -163,53 +193,73 @@ function(exports) {
     onStart: function() {
 
       // Change the Game Start button add ball event , init timer start
-      getId('start').style.display = 'none';
-      this.initEvent();
-      this.timer.start = Date.now();
-      this.onRun();
+      getId('start').style.display = 'none'
+
+      this.id.className = 'game'
+      this.initEvent()
+      this.timer.start = Date.now()
+      this.onRun()
 
       if (DEBUG) debugger
     },
     initEvent: function() {
 
       //add Event for the Grid
-      var self = this;
+      var self = this
 
-      this.id.addEventListener('click', function(e) {
+      var childUl = this.id.getElementsByTagName('ul')
+
+      childUl[childUl.length - 1].getElementsByTagName('img')[0].attributes['data-ball'].value = 1
+
+      self.fristBall = true
+
+      this.id.addEventListener('touchstart', function(e) {
 
         var img = e.target
 
         if (img.attributes['data-ball'] && ball.running && !ball.paused) {
 
-          // get new col
-          var col = renderGridcols()
+          if (img.attributes['data-ball'].value == 1) {
+            // change the ball
+            var type = img.src.substr(-5, 1)
 
-          //move canvas
-          getId('game').style.webkitTransition = '0ms';
-          getId('game').style.webkitTransform = 'translate3d(0,' + Grid.height + 'px,0)'
+            // same ball
+            if (type == 1) {
+              img.className = 'animated shake'
+              img.src = 'img/ball-3.png'
+            }
 
-          //post canvas
-          //$('#game').prepend(col)
+            // fsn ball
+            if (type == 2) {
+              img.className = 'animated shake'
+              img.src = 'img/ball-4.png'
 
-          // change the ball
-          var type = img.src.substr(-5, 1)
+              self.onPause()
+            }
 
-          // same ball
-          if (type == 1) {
-            img.className = 'animated shake'
-            img.src = 'img/ball-3.png'
+            // false to click the kill ball
+            img.attributes['data-ball'].value = 0
+
+            img.parentNode.parentNode.parentNode.previousSibling.getElementsByTagName('img')[0].attributes['data-ball'].value = 1
+
+            //first Ball
+            if (self.fristBall) {
+
+              self.fristBall = false
+
+            } else {
+
+              // get new col
+              var col = renderGridcols()
+
+              //move canvas
+              Next(col, moveNext)
+
+            }
+
+            // add Score
+            score += 1
           }
-
-          // fsn ball
-          if (type == 2) {
-            img.className = 'animated shake'
-            img.src = 'img/ball-4.png'
-
-            self.onPause();
-          }
-
-          // add Score
-          score += 1;
         }
 
       }, false);
@@ -226,24 +276,58 @@ function(exports) {
 
     },
     onPause: function() {
+
       var self = this
+
+      //show big ball
+      $('#big').removeClass('hidden').addClass('animated bounceIn').bind('touchstart', function() {
+        $(this).removeClass('bounceIn').addClass('shake infinite')
+        score += 1
+        updateScore()
+
+      })
+
+      this.timer.start += BallInfo.fsnStop
+
       var to = setTimeout(function() {
+
+        $('#big').addClass('hidden').unbind()
         self.onRun()
-      }, 1000)
+
+      }, BallInfo.fsnStop)
+
       clearInterval(BallInfo.sTime)
+    },
+    onResume: function() {
+      this.id.innerHTML = ''
+      this.firstBall = true
+      debugger
+      this.onInit(getId('game'))
+      score = 0
+      this.start()
     },
     onStop: function() {
 
-      // clear the time Interval
-      clearInterval(BallInfo.sTime)
+      var self = this
+
+      // disabled the click event
       this.id.className += ' disabled'
 
       // post the time html
       BallInfo.Time.innerHTML = "0'" + "00''"
 
+      // post the modal score
+      getId('modalScore').innerHTML = score;
+
       // show the modal
       $('#myModal').modal('show')
-      // save the game info saveInfo()
+      getId('resume').addEventListener('touchstart', function() {
+        $('#myModal').modal('hide')
+        self.resume()
+      }, false)
+
+      // save the game info
+      saveInfo()
       if (DEBUG) debugger
     }
 
