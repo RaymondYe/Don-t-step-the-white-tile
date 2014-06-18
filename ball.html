@@ -20,15 +20,25 @@
 
   <div class="ball">
     <img src="img/game-hd.jpg" alt="game-hd" class="game-hd">
+
     <div class="game-info"> <i id="time" class="pull-left"></i> <i id="score" class="pull-right"></i>
     </div>
-    <div class="game-start" id="start"></div>
+
     <div id="wall" class="wall">
-      <ul id="game" class="game"></ul>
-      <!-- /.game--> </div>
+      <ul id="game" class="game bg-lv"></ul>
+      <!-- /.game-->
+
+      <div class="game-start" id="start">
+        <i class="glyphicon glyphicon-hand-down infinite animated fadeInDown" ></i>
+      </div>
+
+      <!-- /.gamestart tip--> </div>
     <!-- /#wall-->
-    <img src="img/review.jpg" alt="review" id="review" class="review">
-    <img src="img/ball-big.png" alt="big-ball" class="review hidden" id="big"></div>
+
+    <div class="big-ball hidden" id="big">
+      <i class="glyphicon glyphicon-hand-down infinite animated fadeInDown" id="hand"></i>
+      <img src="img/ball-big.png" alt="big-ball" ></div>
+    <!-- /.big ball--> </div>
   <!-- /.ball-->
 
   <!-- Modal -->
@@ -37,7 +47,6 @@
       <div class="modal-content game-over">
         <div class="modal-header hidden"></div>
         <div class="modal-body">
-
           <p class="text-center over-score">
             得分:
             <span id="modalScore">99</span>
@@ -64,28 +73,14 @@
   <!-- /.modal -->
   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-  <script src="js/ball.min.js"></script>
+  <script src="./js/fastclick.min.js"></script>
+  <script src="./js/ball.js"></script>
   <script>
 
     $(function() {
 
       //$('#myModal').modal('show')
-
-      //FastClick.attach(document.body)
-      /*
-      $('#share').click(function(event) {
-        $('#myModal').modal('hide');
-        var imgUrl = './img/img-guide.png';
-        $('body').append('<img src="' + imgUrl + '" alt="" id="J_share-tips" ' +
-          'style="position: fixed; left: 50%; margin-left: -140px; top: 0px; width: 280px; height: auto; z-index: 1000; ' +
-          ' background-repeat: no-repeat; background-position: center 0px; z-index: 99999999"/>');
-        $('body').append('<div id="J-Simple-Mask" style="display: block; z-index: 999; left: 0px; position: fixed; top: 0px; width: ' + screen.availWidth + 'px; opacity: 0.6; height: ' + screen.availHeight + 'px; background-color: black; "></div>');
-        $('#J_share-tips').on('click', function() {
-          $('#J_share-tips').remove();
-          $('#J-Simple-Mask').remove();
-        });
-      })
-      */
+      FastClick.attach(document.getElementById('game'))
 
     })
 
@@ -93,6 +88,18 @@
     function() {
       window.onload = function() { // Game init
         ball.init(document.getElementById('game'))
+        var gHand = $('#game').find('img')[0];
+        $('#start').css({'left':gHand.offsetLeft,'width':gHand.width,'height':gHand.width,}).show();
+        $("#start").bind( 'touchstart' , function () {
+          $("html, body").animate({
+              scrollTop: document.body.offsetHeight + "px"
+          }, {
+              duration: 500,
+              easing: "swing"
+          });
+          return false;
+        });
+
       }
     }
     ();

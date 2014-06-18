@@ -14,7 +14,8 @@ function(exports) {
     timer: 30,
     Time: getId('time'),
     sTime: '',
-    moveSpeed: 300,
+    moveSpeed: 200,
+    fslBall: 20,
     fsnStop: 2000,
   };
 
@@ -68,7 +69,7 @@ function(exports) {
   function renderGridcols() {
 
     var h = '<li><ul>',
-      p = random(20),
+      p = random(BallInfo.fslBall),
       b = random(Grid.cols);
 
     Grid.height = Grid.width / 4
@@ -142,8 +143,8 @@ function(exports) {
     }).prepend(html);
 
     setTimeout(function() {
-      f()
-    }, 0);
+      f();
+    }, 100);
 
   }
 
@@ -174,6 +175,8 @@ function(exports) {
       //Rendering the game grid
       var self = this
       this.id = g
+      this.game = new Audio("./src/game.mp3")
+      this.over = new Audio("./src/over.mp3")
 
       Grid.width = this.id.offsetWidth
       render(g)
@@ -183,14 +186,18 @@ function(exports) {
 
       //add Event for Game Start
       getId('start').addEventListener('touchstart', function() {
-        getId('review').className = 'flipOutX animated'
-        getId('review').style.display = 'none'
         self.start()
       }, false);
 
       if (DEBUG) debugger
     },
     onStart: function() {
+
+      // tap music
+      this.game.play()
+
+      // show Game info
+      $('.game-info').slideDown(300)
 
       // Change the Game Start button add ball event , init timer start
       getId('start').style.display = 'none'
@@ -202,8 +209,10 @@ function(exports) {
 
       if (DEBUG) debugger
     },
+    moveLi: function() {
+      this.id.removeChild(this.id.lastChild)
+    },
     initEvent: function() {
-
       //add Event for the Grid
       var self = this
 
@@ -225,7 +234,7 @@ function(exports) {
 
             // same ball
             if (type == 1) {
-              img.className = 'animated shake'
+              //img.className = 'animated shake'
               img.src = 'img/ball-3.png'
             }
 
@@ -254,8 +263,9 @@ function(exports) {
 
               //move canvas
               Next(col, moveNext)
-
             }
+
+            if ( self.id.getElementsByTagName('ul').length > 6 ) self.moveLi()
 
             // add Score
             score += 1
@@ -281,7 +291,13 @@ function(exports) {
 
       //show big ball
       $('#big').removeClass('hidden').addClass('animated bounceIn').bind('touchstart', function() {
+
+        $('#hand').addClass('hidden')
+        // tap big ball music
+        self.game.play()
+
         $(this).removeClass('bounceIn').addClass('shake infinite')
+
         score += 1
         updateScore()
 
@@ -291,7 +307,7 @@ function(exports) {
 
       var to = setTimeout(function() {
 
-        $('#big').addClass('hidden').unbind()
+        $('#big').removeClass('bounceIn infinite').addClass('hidden').unbind()
         self.onRun()
 
       }, BallInfo.fsnStop)
@@ -309,6 +325,10 @@ function(exports) {
     onStop: function() {
 
       var self = this
+
+      //over music
+      this.game.pause()
+      this.over.play()
 
       // disabled the click event
       this.id.className += ' disabled'

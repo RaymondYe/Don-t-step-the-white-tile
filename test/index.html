@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/css.css">
+  <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+  <div>
+    <ul id="game">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+    </ul>
+  </div>
+  <script>
+  $(function() {
+
+    var g = $('#game');
+    function ani(x,y){
+      g.css({'webkitTransition': x+'ms','webkitTransform':'translate3d(0,'+y+'px,0)'});
+    }
+
+
+    ani(0,-100);
+    var cd = function(){
+      g.css({'webkitTransition': '550ms','webkitTransform':'translate3d(0,-100px,0)'});
+    }
+
+    setTimeout(function(){
+      next(cd);
+    }, 500);
+
+    setTimeout(function(){
+      next(cd);
+    }, 1500);
+
+    function next(f){
+
+      g.css({'webkitTransition': '0ms','webkitTransform':'translate3d(0,-200px,0)'}).prepend('<li>0</li>');
+
+      setTimeout(function(){
+        f();
+      }, 50);
+    }
+
+  });
+  </script>
+</body>
+</html>

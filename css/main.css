@@ -20,24 +20,27 @@ img { max-width: 640px; width: 100%; }
 .footer p { margin-bottom: 0; }
 /* ball */
 .ball { width: 100%; max-width: 640px; margin: auto; position: relative; }
-.review { position: absolute; bottom: 0; }
-.game-start { position: absolute; bottom: 0; width: 30%; left: 0; height: 136px; z-index: 101; background: transparent; border: none; }
-.game-start:hover { cursor: pointer; }
-.game-start:focus { border: none; }
 /* Game */
-.wall { width: 100%; max-width: 640px; margin: auto; overflow: hidden; }
-.game { width: 100%; display: block; max-width: 640px; margin: auto; background: url(../img/game-bg.jpg) center center; overflow: hidden; -webkit-backface-visibility: hidden; }
+.wall { width: 100%; max-width: 640px; margin: auto; overflow: hidden; position: relative; }
+.game { width: 100%; display: block; max-width: 640px; margin: auto; overflow: hidden; transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); -webkit-perspective: 1000; -moz-perspective: 1000; -ms-perspective: 1000; perspective: 1000; }
 .game>li { width: 100%; }
-.game>li>ul>li { width: 25%; display: block; float: left; box-sizing: border-box; border: 1px #fff solid; }
-.game>li>ul>li>img { width: 100%; transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); transition: 5s; -webkit-transition: 5s; cursor: pointer; }
-.game-info { position: absolute; top: 1em; z-index: 1001; color: #fff; overflow: hidden; font-size: 24px; width: 100%; padding: 0 15px; }
+.game>li>ul>li { width: 25%; display: block; float: left; box-sizing: border-box; border: 1px #a3f8bf solid; border-top: none; border-left: none; }
+.game>li>ul>li:last-child { border-right: none; }
+.game>li>ul>li>img { width: 100%;}
+.game-info { position: fixed; top: 0; z-index: 1001; color: #fff; overflow: hidden; width: 100%; padding: 5px 15px; background: rgba(0, 0, 0, .5); font-size: 24px; display: none;}
 .game-info>i { height: 30px; display: block; padding-left: 30px; background: url(../img/time.png) no-repeat; }
 .game-info>#time { background-position: 0 0; background-size: 55px; }
 .game-info>#score { background-position: 0 -33px; background-size: 55px; }
+.game-start { position: absolute; z-index: 101; background: transparent; top: 0; left: 0; color: #fff; font-size: 24px; display: block; }
+.game-start .glyphicon { position: absolute; left: 0; right: 0; margin: auto; top: 15px; }
+.game-start:hover { cursor: pointer; }
+.big-ball { position: absolute; bottom: 0; width: 100%; overflow: hidden; }
+.big-ball .glyphicon { top: 100px; font-size: 48px; color: #262626; position: absolute; left: 0; right: 0; margin: auto; }
 /* Game over */
+.over .modal-dialog { height: 100%; }
 .game-over { padding-bottom: 20px; background: rgba(228, 255, 210, 0.9); color: #595959; font-size: 1em; }
 .game-over p { margin: 0; padding: 10px 15px; }
-.game-over .modal-body { padding: 20px 0; }
+.game-over .modal-body { padding: 12px 0 20px; }
 .game-over .share>a { color: #2d8b31; font-size: 1em; }
 .game-over .btn-b { color: #373737; text-align: center; text-decoration: underline; padding: 0; font-size: 1.2em; }
 .game-over .over-score { color: #3a3e31; padding: 0; }
@@ -47,9 +50,9 @@ img { max-width: 640px; width: 100%; }
 /* ranking */
 .ranking { padding: 15px; width: 100%; }
 /* share */
-.share{ padding-top: 50px; text-align: center;}
-.share p{ padding: 15px;}
-.share img{ display: block; margin: auto;}
+.share { padding-top: 50px; text-align: center; }
+.share p { padding: 15px; }
+.share img { display: block; margin: auto; }
 /* Common */
 .rank { width: 100%; background: #f4f6e0; height: 500px; -webkit-overflow-scrolling: touch; overflow: auto; }
 .rank>li { width: 100%; line-height: 60px; height: 55px; color: #85847d; position: relative; overflow: hidden; background: url(../img/line.png) repeat-x  center 56px; padding-bottom: 10px; }
@@ -76,7 +79,7 @@ img { max-width: 640px; width: 100%; }
 /* All */
 .disabled { pointer-events: none; }
 .bg-green { background: url(../img/green.jpg) center center; }
-.bg-game { background: url(../img/game-bg.jpg) center center; }
+.bg-game { background: url(../img/game-bg.jpg); }
 .bg-gray { background: #f5f5f3 }
 .nobor { border: none; }
 .bg-lv { background: rgba(34, 125, 81, 1); }
