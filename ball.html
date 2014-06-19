@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./css/animate.min.css">
   <link rel="stylesheet" href="./css/main.css">
   <script src="js/game.js"></script>
+  <script src="./js/sound.js"></script>
 </head>
 <body class="bg-lv">
 
@@ -76,12 +77,24 @@
   <script src="./js/fastclick.min.js"></script>
   <script src="./js/ball.js"></script>
   <script>
+    createjs.Sound.addEventListener("fileload", handleLoadComplete)
+    function handleLoadComplete(){
+
+    }
+    function gameSound(){
+      createjs.Sound.alternateExtensions = ["mp3"]
+      createjs.Sound.registerSound({id:"big", src:"./src/big.mp3"})
+      createjs.Sound.registerSound({id:"over", src:"./src/over.mp3"})
+      createjs.Sound.registerSound({id:"bg", src:"./src/game.mp3"})
+      createjs.Sound.registerSound({id:"tap", src:"./src/tap.mp3"})
+    }
+
 
     $(function() {
 
       //$('#myModal').modal('show')
       FastClick.attach(document.getElementById('game'))
-
+      gameSound()
     })
 
     void

@@ -170,8 +170,6 @@ function(exports) {
       //Rendering the game grid
       var self = this
       this.id = g
-      this.game = new Audio("./src/game.mp3")
-      this.over = new Audio("./src/over.mp3")
 
       Grid.width = this.id.offsetWidth
       render(g)
@@ -188,11 +186,10 @@ function(exports) {
     },
     onStart: function() {
 
-      // tap music
-      this.game.play()
-
       // show Game info
       $('.game-info').slideDown(300)
+
+      createjs.Sound.play("bg")
 
       // Change the Game Start button add ball event , init timer start
       getId('start').style.display = 'none'
@@ -230,6 +227,7 @@ function(exports) {
             // same ball
             if (type == 1) {
               //img.className = 'animated shake'
+              createjs.Sound.play("tap")
               img.src = 'img/ball-3.png'
             }
 
@@ -289,7 +287,7 @@ function(exports) {
 
         $('#hand').addClass('hidden')
         // tap big ball music
-        self.game.play()
+        createjs.Sound.play("tap")
 
         $(this).removeClass('bounceIn').addClass('shake infinite')
 
@@ -322,8 +320,8 @@ function(exports) {
       var self = this
 
       //over music
-      this.game.pause()
-      this.over.play()
+      createjs.Sound.stop("bg")
+      createjs.Sound.play("over")
 
       // disabled the click event
       this.id.className += ' disabled'
