@@ -8,7 +8,7 @@
   <script type="text/javascript" src="js/jquery.js"></script>
 </head>
 <body>
-  <div>
+  <div style="-webkit-transform:rotate(180deg)">
     <ul id="game">
       <li>1</li>
       <li>2</li>
@@ -27,26 +27,18 @@
     }
 
 
-    ani(0,-100);
-    var cd = function(){
-      g.css({'webkitTransition': '550ms','webkitTransform':'translate3d(0,-100px,0)'});
-    }
-
     setTimeout(function(){
-      next(cd);
+      next(-100);
     }, 500);
 
     setTimeout(function(){
-      next(cd);
+      next(-200);
     }, 1500);
 
     function next(f){
+      ani(100,f)
+      g.append('<li>0</li>');
 
-      g.css({'webkitTransition': '0ms','webkitTransform':'translate3d(0,-200px,0)'}).prepend('<li>0</li>');
-
-      setTimeout(function(){
-        f();
-      }, 50);
     }
 
   });

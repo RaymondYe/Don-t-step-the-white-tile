@@ -129,22 +129,17 @@ function(exports) {
   }
 
   //Next Ball Cols
-  var moveNext = function() {
+
+  function Next(html) {
+    var l  = $('#game').find('ul').length - 3
+    debugger
+    $('#game').append(html)
+    debugger
+
     $('#game').css({
       'webkitTransition': BallInfo.moveSpeed + 'ms',
-      'webkitTransform': 'translate3d(0,-' + 0 + 'px,0)'
-    });
-  }
-
-  function Next(html, f) {
-    $('#game').css({
-      'webkitTransition': '0ms',
-      'webkitTransform': 'translate3d(0,-' + Grid.height + 'px,0)'
-    }).prepend(html);
-
-    setTimeout(function() {
-      f();
-    }, 100);
+      'webkitTransform': 'translate3d( 0 , -'+ l * Grid.height  +'px, 0 )'
+    })
 
   }
 
@@ -218,7 +213,7 @@ function(exports) {
 
       var childUl = this.id.getElementsByTagName('ul')
 
-      childUl[childUl.length - 1].getElementsByTagName('img')[0].attributes['data-ball'].value = 1
+      childUl[0].getElementsByTagName('img')[0].attributes['data-ball'].value = 1
 
       self.fristBall = true
 
@@ -249,7 +244,7 @@ function(exports) {
             // false to click the kill ball
             img.attributes['data-ball'].value = 0
 
-            img.parentNode.parentNode.parentNode.previousSibling.getElementsByTagName('img')[0].attributes['data-ball'].value = 1
+            img.parentNode.parentNode.parentNode.nextSibling.getElementsByTagName('img')[0].attributes['data-ball'].value = 1
 
             //first Ball
             if (self.fristBall) {
@@ -262,10 +257,10 @@ function(exports) {
               var col = renderGridcols()
 
               //move canvas
-              Next(col, moveNext)
+              Next(col)
             }
 
-            if ( self.id.getElementsByTagName('ul').length > 6 ) self.moveLi()
+            if (self.id.getElementsByTagName('ul').length > 6) self.moveLi()
 
             // add Score
             score += 1
