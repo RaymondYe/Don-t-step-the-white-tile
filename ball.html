@@ -12,7 +12,6 @@
   <meta name="author" content="RaymondYip">
   <title>ball</title>
   <link href="./css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/animate.min.css">
   <link rel="stylesheet" href="./css/main.css">
   <script src="js/game.js"></script>
   <script src="./js/sound.js"></script>
@@ -50,22 +49,21 @@
         <div class="modal-body">
           <p class="text-center over-score">
             得分:
-            <span id="modalScore">99</span>
+            <span id="modalScore" class="fc-y">99</span>
           </p>
           <p class="text-center bor-line over-rank">
             排名:
             <span id="rank">1</span>
           </p>
-
-          <p class="text-center bor-line">您已经击败80%玩家，再努力一点就能拿到奖品了。</p>
           <p class="text-center share bor-line" id="share">
-            <a href="share.html">炫成绩，奖励10积分助你拿奖</a>
+            炫耀成绩 邀请1位好友挑战可<span class="fc-y">+58分 </span> <br>邀请2位好友挑战<span class="fc-y">+88分</span>
+            <a href="share.html"  class="fc-y">炫耀一下</a>
           </p>
-          <br>
-
-          <a href="ranking.html" class="col-xs-5 col-xs-offset-1 btn-b">查看排行榜</a>
-          <a class="col-xs-5 col-xs-offset-1 btn-b" id="resume">在玩一次</a>
-
+          <p class="bor-line">
+            <a href="ranking.html" class="btn-b">查看排行榜</a>
+            <a class="btn-b" id="resume">在玩一次</a>
+          </p>
+          <p class="over-more">更多惊喜</p>
         </div>
         <div class="modal-footer hidden"></div>
       </div>
@@ -76,44 +74,6 @@
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/fastclick.min.js"></script>
   <script src="./js/ball.js"></script>
-  <script>
-    createjs.Sound.addEventListener("fileload", handleLoadComplete)
-    function handleLoadComplete(){
-
-    }
-    function gameSound(){
-      createjs.Sound.alternateExtensions = ["mp3"]
-
-      createjs.Sound.registerSound( {id:"tap", src:"./src/tap.mp3"} )
-      createjs.Sound.registerSound( {id:"over", src:"./src/over.mp3"} )
-    }
-
-
-    $(function() {
-      //$('#myModal').modal('show')
-      FastClick.attach(document.getElementById('game'))
-      gameSound()
-    })
-
-    void
-    function() {
-      window.onload = function() { // Game init
-        ball.init(document.getElementById('game'))
-        var gHand = $('#game').find('img')[0];
-        $('#start').css({'left':gHand.offsetLeft,'width':gHand.width,'height':gHand.width,}).show();
-        $("#start").bind( 'touchstart' , function () {
-          $("html, body").animate({
-              scrollTop: document.body.offsetHeight + "px"
-          }, {
-              duration: 500,
-              easing: "swing"
-          });
-          return false;
-        });
-
-      }
-    }
-    ();
-  </script>
+  <script src="./js/main.js"></script>
 </body>
 </html>
