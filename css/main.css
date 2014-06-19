@@ -24,8 +24,7 @@ img { max-width: 640px; width: 100%; }
 .wall { width: 100%; max-width: 640px; margin: auto; overflow: hidden; position: relative; -webkit-transform: rotate(180deg); }
 .game { width: 100%; display: block; max-width: 640px; margin: auto; overflow: hidden; transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); -webkit-perspective: 1000; -moz-perspective: 1000; -ms-perspective: 1000; perspective: 1000; }
 .game>li { width: 100%; }
-.game>li>ul>li { width: 25%; display: block; float: left; box-sizing: border-box; border: 1px #a3f8bf solid; border-top: none; -webkit-transform: rotate(180deg); }
-.game>li>ul>li:last-child { border-left: none; }
+.game>li>ul>li { width: 25%; display: block; float: left; box-sizing: border-box; border: 1px #a3f8bf solid; -webkit-transform: rotate(180deg); }
 .game>li>ul>li>img { width: 100%;}
 .game-info { position: fixed; top: 0; z-index: 1001; color: #fff; overflow: hidden; width: 100%; padding: 5px 15px; background: rgba(0, 0, 0, .5); font-size: 24px; display: none;}
 .game-info>i { height: 30px; display: block; padding-left: 30px; background: url(../img/time.png) no-repeat; }

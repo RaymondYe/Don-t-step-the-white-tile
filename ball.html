@@ -83,15 +83,13 @@
     }
     function gameSound(){
       createjs.Sound.alternateExtensions = ["mp3"]
-      createjs.Sound.registerSound({id:"big", src:"./src/big.mp3"})
-      createjs.Sound.registerSound({id:"over", src:"./src/over.mp3"})
-      createjs.Sound.registerSound({id:"bg", src:"./src/game.mp3"})
-      createjs.Sound.registerSound({id:"tap", src:"./src/tap.mp3"})
+
+      createjs.Sound.registerSound( {id:"tap", src:"./src/tap.mp3"} )
+      createjs.Sound.registerSound( {id:"over", src:"./src/over.mp3"} )
     }
 
 
     $(function() {
-
       //$('#myModal').modal('show')
       FastClick.attach(document.getElementById('game'))
       gameSound()

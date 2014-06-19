@@ -13,7 +13,7 @@
     Game.prototype = {
         constructor: Game,
         id: null,
-        FPS: 60,
+        FPS: 15,
         init: function() {
             var Me = this;
             this._run = function() {

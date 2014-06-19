@@ -58,7 +58,8 @@ function(exports) {
 
   // render Grid
   function renderGrid() {
-    var h = '';
+    var h = ''
+    Grid.height = Grid.width / 4
     for (var i = 0; i < Grid.total / Grid.cols; i++) {
       h += renderGridcols();
     };
@@ -68,11 +69,9 @@ function(exports) {
   // render Grid cols
   function renderGridcols() {
 
-    var h = '<li><ul>',
+    var h = '<li style="height:' + Grid.height + 'px"><ul>',
       p = random(BallInfo.fslBall),
       b = random(Grid.cols);
-
-    Grid.height = Grid.width / 4
 
     for (var i = 0; i < Grid.cols; i++) {
       if (b == i) {
@@ -130,15 +129,15 @@ function(exports) {
 
   //Next Ball Cols
 
-  function Next(html) {
-    var l  = $('#game').find('ul').length - 3
-    debugger
-    $('#game').append(html)
-    debugger
+  function Next(html, l) {
 
-    $('#game').css({
+    var g = $('#game');
+
+    g.append(html)
+
+    g.css({
       'webkitTransition': BallInfo.moveSpeed + 'ms',
-      'webkitTransform': 'translate3d( 0 , -'+ l * Grid.height  +'px, 0 )'
+      'webkitTransform': 'translate3d( 0 , -' + l * Grid.height + 'px, 0 )'
     })
 
   }
@@ -188,8 +187,6 @@ function(exports) {
 
       // show Game info
       $('.game-info').slideDown(300)
-
-      createjs.Sound.play("bg")
 
       // Change the Game Start button add ball event , init timer start
       getId('start').style.display = 'none'
@@ -253,12 +250,14 @@ function(exports) {
 
               // get new col
               var col = renderGridcols()
+              var ne = self.id.childNodes.length - 3
 
               //move canvas
-              Next(col)
+              Next(col, ne)
+              if (ne > 6) {
+                img.parentNode.parentNode.parentNode.previousSibling.previousSibling.innerHTML = ''
+              }
             }
-
-            if (self.id.getElementsByTagName('ul').length > 6) self.moveLi()
 
             // add Score
             score += 1
@@ -309,8 +308,9 @@ function(exports) {
     },
     onResume: function() {
       this.id.innerHTML = ''
+      $('#game').css('webkitTransform', 'translate3d( 0 , 0 , 0 )');
       this.firstBall = true
-      debugger
+      if (DEBUG) debugger
       this.onInit(getId('game'))
       score = 0
       this.start()
@@ -320,7 +320,6 @@ function(exports) {
       var self = this
 
       //over music
-      createjs.Sound.stop("bg")
       createjs.Sound.play("over")
 
       // disabled the click event
