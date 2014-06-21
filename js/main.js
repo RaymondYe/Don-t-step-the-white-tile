@@ -21,7 +21,7 @@
     $(function() {
 
       //$('#myModal').modal('show')
-      FastClick.attach(document.getElementById('game'))
+      FastClick.attach(document.getElementById('wall'))
       gameSound()
 
       $('#share').click(function(event) {
@@ -42,23 +42,23 @@
 
     function() {
       window.onload = function() { // Game init
-        ball.init(document.getElementById('game'))
-        var gHand = $('#game').find('img')[0];
-        $('#start').css({
-          'left': gHand.offsetLeft,
-          'width': gHand.width,
-          'height': gHand.width,
-        }).show();
-        $("#start").bind('touchstart', function() {
-          $("html, body").animate({
-            scrollTop: document.body.offsetHeight + "px"
-          }, {
-            duration: 500,
-            easing: "swing"
-          });
-          return false;
-        });
+        ball.init(document.getElementById('wall'))
+      //   var gHand = $('#game').find('li')[0];
+      //   $('#start').css({
+      //     'left': gHand.offsetLeft,
+      //     'width': gHand.width,
+      //     'height': gHand.width,
+      //   }).show();
+      //   $("#start").bind('touchstart', function() {
+      //     $("html, body").animate({
+      //       scrollTop: document.body.offsetHeight + "px"
+      //     }, {
+      //       duration: 500,
+      //       easing: "swing"
+      //     });
+      //     return false;
+      //   });
+        ball.start()
 
-      }
-    }
-    ();
+       }
+    }();

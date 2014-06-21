@@ -21,10 +21,11 @@ function(exports) {
 
 
   var Grid = {
-    total: 16,
+    total: 24,
     cols: 4,
     width: 640,
     height: 0,
+    rows: 6
   };
 
   var queue = 0;
@@ -56,15 +57,32 @@ function(exports) {
     return document.getElementById(o);
   }
 
+  var ta = Grid.rows , firstCol ;
+
   // render Grid
   function renderGrid() {
-    var h = ''
+    var h = '<ul class="game">'
     Grid.height = Grid.width / 4
+    ta = Grid.rows
     for (var i = 0; i < Grid.total / Grid.cols; i++) {
-      h += renderGridcols();
+      ta -= 1
+      h += renderGridcols()
     };
+    h += '</ul>';
     return h;
   }
+
+  function refeshGrid() {
+    var h = ''
+    Grid.height = Grid.width / Grid.cols
+    ta = Grid.rows
+    for (var i = 0; i < Grid.total / Grid.cols; i++) {
+      ta -= 1
+      h += renderGridcols()
+    }
+    return h;
+  }
+
 
   // render Grid cols
   function renderGridcols() {
@@ -73,18 +91,21 @@ function(exports) {
       p = random(BallInfo.fslBall),
       b = random(Grid.cols);
 
+    if (firstCol && ta == 0) {
+      b = 999
+      firstCol = false
+    }
     for (var i = 0; i < Grid.cols; i++) {
       if (b == i) {
         if (p == 0) {
-          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-2.png" alt="Ball"  data-ball="0"/></li>'
+          h += '<li style="height:' + Grid.height + 'px" class="b2" data-t=' + ta + '></li>'
         } else {
-          h += '<li style="height:' + Grid.height + 'px"><img src="img/ball-1.png" alt="Ball"  data-ball="0"/></li>'
+          h += '<li style="height:' + Grid.height + 'px" class="b1" data-t=' + ta + '></li>'
         }
       } else {
         h += '<li style="height:' + Grid.height + 'px"></li>'
       }
     }
-
     h += '</ul></li>'
     return h;
   }
@@ -92,9 +113,9 @@ function(exports) {
   // render view
   function render(g) {
 
-    var l = g.getElementsByTagName('li')
+    g.innerHTML += renderGrid()
 
-    g.innerHTML = renderGrid()
+    g.innerHTML += renderGrid()
 
     getId('wall').style.height = Grid.width + 'px'
 
@@ -129,16 +150,10 @@ function(exports) {
 
   //Next Ball Cols
 
-  function Next(html, l) {
+  function Next(id, y, m) {
 
-    var g = $('#game');
-
-    g.append(html)
-
-    g.css({
-      'webkitTransition': BallInfo.moveSpeed + 'ms',
-      'webkitTransform': 'translate3d( 0 , -' + l * Grid.height + 'px, 0 )'
-    })
+    id.style['webkitTransition'] = m + 'ms'
+    id.style['webkitTransform'] = 'translate3D(0,' + y + 'px,0)'
 
   }
 
@@ -169,7 +184,7 @@ function(exports) {
       //Rendering the game grid
       var self = this
       this.id = g
-
+      firstCol = true
       Grid.width = this.id.offsetWidth
       render(g)
 
@@ -181,6 +196,10 @@ function(exports) {
         self.start()
       }, false);
 
+      // Set the gamelayer
+      Next(this.id.firstChild, 0)
+      Next(this.id.lastChild, -Grid.height * Grid.rows)
+
       if (DEBUG) debugger
     },
     onStart: function() {
@@ -191,7 +210,6 @@ function(exports) {
       // Change the Game Start button add ball event , init timer start
       getId('start').style.display = 'none'
 
-      this.id.className = 'game'
       this.initEvent()
       this.timer.start = Date.now()
       this.onRun()
@@ -205,63 +223,71 @@ function(exports) {
       //add Event for the Grid
       var self = this
 
-      var childUl = this.id.getElementsByTagName('ul')
+      var type = 1
 
-      childUl[0].getElementsByTagName('img')[0].attributes['data-ball'].value = 1
+      this.ta = 1
 
-      self.fristBall = true
+      this.even = true
+
+      this.total = 1
 
       this.id.addEventListener('touchstart', function(e) {
 
-        var img = e.target
+        var li = e.target
+        if (!li['attributes']['data-t']) return;
+        var tt = parseInt(li['attributes']['data-t'].value || '')
 
-        if (img.attributes['data-ball'] && ball.running && !ball.paused) {
+        if (tt == self.ta && ball.running && !ball.paused) {
 
-          if (img.attributes['data-ball'].value == 1) {
-            // change the ball
-            var type = img.src.substr(-5, 1)
-
-            // same ball
-            if (type == 1) {
-              //img.className = 'animated shake'
-              createjs.Sound.play("tap")
-              img.src = 'img/ball-3.png'
-            }
-
-            // fsn ball
-            if (type == 2) {
-              img.className = 'animated shake'
-              img.src = 'img/ball-4.png'
-
-              self.onPause()
-            }
-
-            // false to click the kill ball
-            img.attributes['data-ball'].value = 0
-
-            img.parentNode.parentNode.parentNode.nextSibling.getElementsByTagName('img')[0].attributes['data-ball'].value = 1
-
-            //first Ball
-            if (self.fristBall) {
-
-              self.fristBall = false
-
-            } else {
-
-              // get new col
-              var col = renderGridcols()
-              var ne = self.id.childNodes.length - 3
-
-              //move canvas
-              Next(col, ne)
-              if (ne > 6) {
-                img.parentNode.parentNode.parentNode.previousSibling.previousSibling.innerHTML = ''
-              }
-            }
-
-            // add Score
-            score += 1
+          // same ball
+          if (li.className == 'b1') {
+            li.className = 'b3'
           }
+
+          // fsn ball
+          if (li.className == 'b2') {
+            li.className = 'b4'
+
+            self.onPause()
+          }
+
+          // sound tap
+          createjs.Sound.play("tap")
+
+          //move canvas
+          var x, y;
+          if (self.even) {
+            y = self.id.firstChild
+            x = self.id.lastChild
+          } else {
+            x = self.id.firstChild
+            y = self.id.lastChild
+          }
+
+          if (tt == 0) {
+            Next(y, Grid.rows * Grid.height, BallInfo.moveSpeed)
+            Next(x, 0, BallInfo.moveSpeed)
+          } else {
+            Next(y, tt * Grid.height, BallInfo.moveSpeed)
+            if (tt == 1) {
+              Next(x, -(Grid.rows - tt) * Grid.height, 0)
+              x.innerHTML = refeshGrid()
+            } else {
+              Next(x, -(Grid.rows - tt) * Grid.height, BallInfo.moveSpeed)
+            }
+          }
+
+          if (self.total % 6 == 0) self.even = self.even ? false : true
+
+          // change ta value
+          if (tt < Grid.rows) self.ta += 1
+          if (tt == Grid.rows - 1) {
+            self.ta = 0
+          }
+          self.total += 1
+
+          // add Score
+          score += 1
         }
 
       }, false);
@@ -308,10 +334,9 @@ function(exports) {
     },
     onResume: function() {
       this.id.innerHTML = ''
-      $('#game').css('webkitTransform', 'translate3d( 0 , 0 , 0 )');
-      this.firstBall = true
+      this.onInit(getId('wall'))
+      this.id.className = 'wall'
       if (DEBUG) debugger
-      this.onInit(getId('game'))
       score = 0
       this.start()
     },
