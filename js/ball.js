@@ -11,7 +11,7 @@ function(exports) {
   var DEBUG = false;
 
   var BallInfo = {
-    timer: 5,
+    timer: 30,
     Time: getId('time'),
     sTime: '',
     moveSpeed: 200,
@@ -202,6 +202,9 @@ function(exports) {
       // Set the gamelayer
       Next(this.id.firstChild, 0)
       Next(this.id.lastChild, -Grid.height * Grid.rows)
+
+      gameSound()
+
 
       if (DEBUG) debugger
     },

@@ -50,6 +50,5 @@ function() {
       return false;
     });
 
-    gameSound()
   }
 }();
