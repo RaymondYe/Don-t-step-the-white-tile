@@ -11,7 +11,7 @@ function(exports) {
   var DEBUG = false;
 
   var BallInfo = {
-    timer: 30,
+    timer: 5,
     Time: getId('time'),
     sTime: '',
     moveSpeed: 200,
@@ -57,7 +57,8 @@ function(exports) {
     return document.getElementById(o);
   }
 
-  var ta = Grid.rows , firstCol ;
+  var ta = Grid.rows,
+    firstCol;
 
   // render Grid
   function renderGrid() {
@@ -143,19 +144,21 @@ function(exports) {
       }
     }
   }
+
   //Update score
   function updateScore() {
     getId('score').innerHTML = '&#215;' + score
   }
 
   //Next Ball Cols
-
   function Next(id, y, m) {
 
     id.style['webkitTransition'] = m + 'ms'
     id.style['webkitTransform'] = 'translate3D(0,' + y + 'px,0)'
 
   }
+
+
 
   //Save the user ball info
   function saveInfo() {
@@ -353,13 +356,32 @@ function(exports) {
       // post the time html
       BallInfo.Time.innerHTML = "0'" + "00''"
 
-      // post the modal score
-      getId('modalScore').innerHTML = score;
+      // show the modal And post the modal score
+      getId('modalScore').innerHTML = score
+      var end = getId('game-end')
+      end.style.display = 'block'
+      $('#J-Simple-Mask').show()
 
-      // show the modal
-      $('#myModal').modal('show')
-      getId('resume').addEventListener('touchstart', function() {
-        $('#myModal').modal('hide')
+      // add close event
+      touch.on('#close', 'tap', function(ev) {
+        end.style.display = 'none'
+        $('#J-Simple-Mask').hide()
+      })
+
+      touch.on('#J-Simple-Mask', 'tap', function(ev) {
+        $('#J-Simple-Mask').css('z-index', '999')
+        document.getElementById('J_share-tips').style.display = 'none'
+      })
+
+      touch.on('#share', 'tap', function(ev) {
+        $('#J-Simple-Mask').css('z-index', '1111')
+        document.getElementById('J_share-tips').style.display = 'block'
+      })
+
+      //add resume event
+      getId('resume').addEventListener('touchend', function() {
+        end.style.display = 'none'
+        $('#J-Simple-Mask').hide()
         self.resume()
       }, false)
 

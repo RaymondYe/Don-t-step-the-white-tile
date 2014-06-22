@@ -9,7 +9,7 @@
   <meta name="Keywords" content="ball">
   <meta name="Description" content="ball">
   <meta name="author" content="RaymondYip">
-  <title>index</title>
+  <title>梵思诺-Game</title>
   <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css"></head>
 <body class=" bg-green">
@@ -23,7 +23,7 @@
     <div class="i-tab">
       <!-- /.Tab nav-->
       <div class="nav-top">
-        <img src="img/nav-top.png" alt="nva-top">
+        <img src="img/nav-top.png" alt="nav-top" id ="nav-top">
         <a href="#home" data-toggle="tab" class="first"></a>
         <a href="#profile" data-toggle="tab" class="last"></a>
       </div>
@@ -61,7 +61,8 @@
           <ul class="rank" id="rank">
             <li>
               <span class="yuan1">1</span>
-              <img src="img/u0.jpg" alt="userImage"> <b>昵称</b>
+              <img src="img/u0.jpg" alt="userImage">
+              <b>昵称<img src="img/bei.png" alt="奖杯"></b>
               <p>得分: 99</p>
             </li>
             <li>
@@ -130,28 +131,13 @@
   </div>
   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-  <script src="http://code.baidu.com/touch-0.2.13.min.js"></script>
   <script>
   $(function() {
-    touch.on('#rank','swipeup',function(){
-      //Ajax get more rank
-      $.ajax({
-        url: './server/controller.php',
-        type: 'post',
-        dataType: 'json',
-        data: {param1: 'value1'},
-      })
-      .done(function() {
-        console.log("success");
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+      var src = e.target.className == 'last' ? './img/nav-top2.png' : './img/nav-top.png'
+        $('#nav-top').attr('src', src);
+    })
 
-    });
   });
   </script>
 </body>

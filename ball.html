@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
   <meta content="telephone=no" name="format-detection" />
-  <meta name="screen-orientation" content="landscape"/>
   <meta name="Keywords" content="ball">
   <meta name="Description" content="ball">
   <meta name="author" content="RaymondYip">
@@ -27,8 +27,7 @@
     <div id="wall" class="wall"></div>
     <!-- /#wall-->
 
-    <div class="game-start" id="start">
-      Start
+    <div class="game-start hidden" id="start">
       <i class="glyphicon glyphicon-hand-down infinite animated fadeInDown" ></i>
     </div>
 
@@ -39,42 +38,49 @@
       <img src="img/ball-big.png" alt="big-ball" ></div>
     <!-- /.big ball--> </div>
   <!-- /.ball-->
+  <div id="game-end" style=" display:none">
+    <div class="modal over show" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content game-over">
+          <div class="modal-header hidden"></div>
+          <div class="modal-body">
 
-  <!-- Modal -->
-  <div class="modal fade over" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content game-over">
-        <div class="modal-header hidden"></div>
-        <div class="modal-body">
-          <p class="text-center over-score">
-            得分:
-            <span id="modalScore" class="fc-y">99</span>
-          </p>
-          <p class="text-center bor-line over-rank">
-            排名:
-            <span id="rank">1</span>
-          </p>
-          <p class="text-center share bor-line" id="share">
-            炫耀成绩 邀请1位好友挑战可
-            <span class="fc-y">+58分</span>
-            <br>
-            邀请2位好友挑战
-            <span class="fc-y">+88分</span>
-            <a href="share.html"  class="fc-y">炫耀一下</a>
-          </p>
-          <p class="bor-line">
-            <a href="ranking.html" class="btn-b">查看排行榜</a>
-            <a class="btn-b" id="resume">在玩一次</a>
-          </p>
-          <p class="over-more">更多惊喜</p>
+            <button type="button" class="close" id="close">&times;</button>
+            <p class="text-center over-score">
+              得分:
+              <span id="modalScore" class="fc-y"></span>
+            </p>
+            <p class="text-center bor-line over-rank">
+              排名:
+              <span id="rank">1</span>
+            </p>
+            <p class="text-center share bor-line" id="share">
+              炫耀成绩求超越<br>
+              邀请1位好友挑战
+              <span class="fc-y">+58分</span><br>
+              邀请2位好友挑战
+              <span class="fc-y">+88分</span>
+              <a href="#" id="share"  class="fc-y">求超越</a>
+            </p>
+            <p class="bor-line">
+              <a href="ranking.html" class="btn-b">查看排行榜</a>
+              <a class="btn-b" id="resume">在玩一次</a>
+            </p>
+            <p class="over-more">更多惊喜</p>
+          </div>
+          <div class="modal-footer hidden"></div>
         </div>
-        <div class="modal-footer hidden"></div>
       </div>
-      <!-- /.modal-content --> </div>
-    <!-- /.modal-dialog --> </div>
-  <!-- /.modal -->
+    </div>
+
+    <div id="J-Simple-Mask" style="z-index: 999; left: 0px; position: fixed; top: 0px; opacity: 0.5;  background-color: black; width:100%; height:100%;">
+      <p style="display: block; z-index: 1000; left: 0; right: 0; position: fixed; bottom: 0px; width: 300px; color: #fff; margin: auto; height: 30px; text-align: center;">技术支持：星云微讯 0755-28520488</p>
+    </div>
+  </div>
+  <!-- /.game-end-->
+  <img src="./img/img-guide.png" alt="" id="J_share-tips" style="position: fixed;left:50%;margin-left:-150px;top:5px;width:300px;height: auto;z-index:1112;background-repeat: no-repeat;background-position:center 0px;display:none;"/>
   <script src="./js/jquery.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
+  <script src="http://code.baidu.com/touch-0.2.13.min.js"></script>
   <script src="./js/fastclick.min.js"></script>
   <script src="./js/ball.js"></script>
   <script src="./js/main.js"></script>
