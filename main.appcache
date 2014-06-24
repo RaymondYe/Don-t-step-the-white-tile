@@ -1,0 +1,27 @@
+CACHE MANIFEST
+# 2014-06-24 v1.0.2
+./img/ball-1.png
+./img/ball-2.png
+./img/ball-3.png
+./img/ball-4.png
+./img/ball-big.png
+./img/game-hd.jpg
+./img/chuo.png
+./img/card.png
+./img/text.png
+./img/text2.png
+./img/hd.jpg
+
+./css/bootstrap.min.css
+./css/main.min.css
+
+./js/sound.js
+./js/game.js
+./js/jquery.js
+./js/bootstrap.min.js
+./js/fastclick.min.js
+
+NETWORK:
+*
+
+

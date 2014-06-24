@@ -188,7 +188,7 @@ function(exports) {
       var self = this
       this.id = g
       firstCol = true
-      Grid.width = this.id.offsetWidth
+      Grid.width = screen.availWidth
       render(g)
 
       //Init Score

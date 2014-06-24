@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" manifest="main.appcache">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,12 +10,18 @@
   <meta name="Description" content="ball">
   <meta name="author" content="RaymondYip">
   <title>梵思诺-Game</title>
-  <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css"></head>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/main.css"></head>
 <body class=" bg-green">
   <div class="index">
     <div class="text-center index-hd">
       <img src="img/hd.jpg" alt="hd">
+      <img src="img/btn-card.png" alt="card" class="btn-card" id="card">
+      <div class="can" id="can">
+        <img src="img/card.png" alt="刮刮卡">
+        <span>恭喜你获得xxx奖品</span>
+        <canvas id="canvas" width="200" height="50"></canvas>
+      </div>
       <a href="ball.html" class="send">
         <span class="btn-l"></span>
         <span class="btn-l"></span>
@@ -23,7 +29,8 @@
         开始游戏
         <span class="btn-r"></span>
         <span class="btn-r"></span>
-        <span class="btn-r"></span></a>
+        <span class="btn-r"></span>
+      </a>
     </div>
 
     <div class="i-tab">
@@ -44,6 +51,7 @@
             <img src="img/ge.png" alt="ge" class="rank-ge">
             <div class="rank-record bg-u">
               <img src="img/user-img.png" alt="用户头像">
+              <span class="user-bei bei3"></span>
               <p class="pull-left nick"> <b>流年岁月</b>
                 <br>
                 已玩
@@ -160,16 +168,8 @@
   <div class="footer">
     <p class="text-center">技术支持：星云微讯科技0755-28520488</p>
   </div>
-  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-  <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-  <script>
-  $(function() {
-    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-      var src = e.target.className == 'last' ? './img/nav-top2.png' : './img/nav-top.png'
-        $('#nav-top').attr('src', src);
-    })
-
-  });
-  </script>
+  <script src="./js/jquery.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/index.js"></script>
 </body>
 </html>

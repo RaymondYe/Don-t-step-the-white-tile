@@ -12,17 +12,12 @@ function gameSound() {
 }
 
 $(function() {
+
   FastClick.attach(document.getElementById('wall'))
-});
 
-void
-
-function() {
-  window.onload = function() {
-    var wall = document.getElementById('wall')
-      // Game init
-    ball.init(wall)
-
+  touch.on('#loading', 'tap', function(ev) {
+    $('.loading').remove()
+    $('.ball').show()
     // gHand init
     var gHand = wall.firstChild.lastChild.previousSibling.getElementsByTagName('li')
 
@@ -34,13 +29,21 @@ function() {
           'width': gHand[i].offsetWidth,
           'height': gHand[i].offsetWidth,
         }).removeClass('hidden');
-
       }
-
     }
+  });
+
+});
+
+void
+
+function() {
+  window.onload = function() {
+    var wall = document.getElementById('wall')
+      // Game init
+    ball.init(wall)
 
     $("#start").on('touchstart', function() {
-      ball.start()
       $("html, body").animate({
         scrollTop: document.body.offsetHeight + "px"
       }, {

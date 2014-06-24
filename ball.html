@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" manifest="main.appcache">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,13 +11,16 @@
   <meta name="Description" content="ball">
   <meta name="author" content="RaymondYip">
   <title>ball</title>
-  <link href="./css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/main.css">
-  <script src="js/game.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/main.min.css">
+  <script src="./js/game.js"></script>
   <script src="./js/sound.js"></script>
 </head>
 <body class="bg-lv">
-
+  <div class="loading">
+    <img src="img/loading.png" alt="loading..." >
+    <a href="#" id="loading"></a>
+  </div>
   <div class="ball">
     <img src="img/game-hd.jpg" alt="game-hd" class="game-hd">
 
@@ -34,7 +37,7 @@
     <!-- /.gamestart tip-->
 
     <div class="big-ball hidden" id="big">
-      <i class="glyphicon glyphicon-hand-down infinite animated fadeInDown" id="hand"></i>
+      <i class="chuo infinite animated fadeInDown" id="hand"></i>
       <img src="img/ball-big.png" alt="big-ball" ></div>
     <!-- /.big ball--> </div>
   <!-- /.ball-->
@@ -63,10 +66,10 @@
               <a href="#" id="share"  class="fc-y">求超越</a>
             </p>
             <p class="bor-line">
-              <a href="ranking.html" class="btn-b">查看排行榜</a>
-              <a class="btn-b" id="resume">在玩一次</a>
+              <a href="index.html" class="btn-b">查看排行榜</a>
+              <a class="btn-b" id="resume">再玩一次</a>
             </p>
-            <p class="over-more">更多惊喜</p>
+            <p class="over-more">梵思诺线下活动</p>
           </div>
           <div class="modal-footer hidden"></div>
         </div>
@@ -82,7 +85,7 @@
   <script src="./js/jquery.js"></script>
   <script src="http://code.baidu.com/touch-0.2.13.min.js"></script>
   <script src="./js/fastclick.min.js"></script>
-  <script src="./js/ball.js"></script>
+  <script src="./js/ball.min.js"></script>
   <script src="./js/main.js"></script>
 </body>
 </html>
