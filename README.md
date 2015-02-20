@@ -1,4 +1,4 @@
-Tap the ball.
+Don't step the white tile
 ====
-Imitate Don't Tap The White Tile.
+Don't step the white tile for html5.
 
